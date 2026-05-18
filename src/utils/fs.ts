@@ -3,7 +3,7 @@
  */
 
 import { readFileSync, statSync, existsSync } from "fs";
-import { join, relative, extname } from "path";
+import { join, relative, extname, basename } from "path";
 import fg from "fast-glob";
 
 export interface ScanOptions {
@@ -74,8 +74,8 @@ export async function scanFiles(rootPath: string, options: ScanOptions = {}): Pr
         size: stat.size,
         content,
         isTest: TEST_PATTERNS.some((p) => p.test(lowerPath)),
-        isDoc: DOC_EXTENSIONS.includes(ext) || DOC_FILENAMES.some((n) => lowerPath.includes(n)),
-        isConfig: CONFIG_FILENAMES.some((n) => lowerPath.endsWith(n)),
+        isDoc: DOC_EXTENSIONS.includes(ext) || DOC_FILENAMES.some((n) => basename(lowerPath).replace(extname(lowerPath), "") === n || basename(lowerPath) === n),
+        isConfig: CONFIG_FILENAMES.some((n) => lowerPath.endsWith(n.toLowerCase())),
       });
     } catch {
       // Skip unreadable files

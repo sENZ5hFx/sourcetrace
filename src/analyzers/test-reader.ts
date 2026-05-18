@@ -68,7 +68,7 @@ function analyzeTestFile(file: ScannedFile): TestFileAnalysis {
 function detectFramework(file: ScannedFile): TestFileAnalysis["framework"] {
   const content = file.content;
 
-  if (content.includes("from vitest") || content.includes("import { describe") && content.includes("vitest")) {
+  if (content.includes("from 'vitest'") || content.includes("from \"vitest\"") || (content.includes("import {") && content.includes("vitest"))) {
     return "vitest";
   }
   if (content.includes("@jest") || content.includes("jest.mock")) {
@@ -185,7 +185,7 @@ function extractPythonDocstring(lines: string[], startLine: number): string {
   for (let i = startLine + 1; i < Math.min(startLine + 5, lines.length); i++) {
     const line = lines[i].trim();
     if (line.startsWith('"""') || line.startsWith("'''")) {
-      const content = line.replace(/^['"{3}]+|['"{3}]+$/g, "").trim();
+      const content = line.replace(/^(?:"""|''')|(?:"""|''')$/g, "").trim();
       if (content) return content;
       // Multi-line docstring
       for (let j = i + 1; j < lines.length; j++) {
