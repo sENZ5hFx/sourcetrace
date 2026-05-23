@@ -41,8 +41,9 @@ function detectLayers(files: ScannedFile[]): ArchitectureLayer[] {
   const dirMap = new Map<string, ScannedFile[]>();
 
   for (const file of files) {
-    const topDir = file.relativePath.split("/")[0] || ".";
-    if (!dirMap.has(topDir)) dirMap.set(topDir, []);
+    const parts = file.relativePath.split("/");
+    const topDir = parts.length > 1 ? parts[0] : ".";
+
     dirMap.get(topDir)!.push(file);
   }
 
