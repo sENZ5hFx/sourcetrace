@@ -3,6 +3,6 @@ uvicorn[standard]>=0.29.0
 pydantic>=2.7.0
 hashlib2>=1.0.0
 python-dateutil>=2.9.0
-sqlite-utils>=3.36
+sqlite-utils>=3.39
 httpx>=0.27.0
 pytest>=8.2.0
