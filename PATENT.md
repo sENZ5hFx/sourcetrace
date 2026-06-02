@@ -1,6 +1,6 @@
-# Patent Claims — Sourcetrace
+# Patent Disclosure — Sourcetrace
 
-**Product:** Sourcetrace — Automated Truth-Extraction & Codebase Reality Mapping Engine  
+**Product:** Sourcetrace — Automated Truth-Extraction Engine  
 **Inventor:** Haley Ann Bird (sole)  
 **Organization:** Swixixle / sENZ5hFx  
 **Disclosure Date:** 2026-05-18  
@@ -8,40 +8,53 @@
 
 ---
 
-## Patent Claim 1 — Automated Truth-Extraction Engine
+## Patent Claims
 
-A method and system for automatically extracting verified behavioral claims from a software codebase, comprising:
-- Static and dynamic analysis passes that produce a structured 'reality map' distinguishing what a system actually guarantees from what its documentation claims;
-- A contradiction detector that flags divergences between documented behavior and observed code paths;
-- A footgun detector that identifies dangerous or undocumented failure modes in the codebase;
-- Output serialization into a portable 'truth pack' format consumable by downstream rendering systems.
+### Claim 1: Guarantee-Scoped Static Analysis Pipeline
 
-## Patent Claim 2 — Source Truth Pack Protocol
+A system and method for analyzing source code repositories to extract only what the system *actually guarantees at runtime*, comprising:
+- Static traversal of entry points, route definitions, middleware chains, and exported interfaces;
+- Automated detection of discrepancies between documentation assertions and code-level guarantees;
+- Structured output of a "reality map" distinguishing guaranteed behavior from aspirational documentation;
+- Footgun detection: automated flagging of dangerous defaults, silent failure modes, and missing error boundaries.
 
-A data structure and serialization protocol for representing codebase reality maps, comprising:
-- A versioned schema encoding verified guarantees, known failure modes, documentation contradictions, and dependency surface;
-- A provenance field recording the exact commit SHA, timestamp, and analysis engine version that produced each claim;
-- A machine-readable format enabling downstream onboarding interfaces to render interactive, fear-free exploration experiences without re-analyzing the source.
+Novel aspect: the explicit separation of *what is guaranteed* vs *what is documented* as a first-class output artifact.
 
-## Patent Claim 3 — Multi-Codebase Orchestrated Analysis
+### Claim 2: Cross-Codebase Truth Pack Schema
 
-A system for orchestrated simultaneous analysis of multiple software repositories, comprising:
-- A centralized orchestrator that dispatches analysis jobs to per-repo truth-extraction agents;
-- A cross-repo contradiction surface that identifies interfaces where one repo's guarantees conflict with another's assumptions;
-- A unified truth pack aggregation layer producing a multi-project reality map from individual per-repo truth packs.
+A portable, versioned data schema ("truth pack") for encoding the extracted reality map of any codebase, comprising:
+- Normalized representations of guarantees, lies, footguns, and unknowns;
+- Source-location anchors (file, line, symbol) for every extracted claim;
+- Compatibility metadata enabling downstream consumers (onboarding tools, documentation generators, AI systems) to consume truth packs without re-analyzing source;
+- Incremental update semantics: truth packs can be diffed and patched as the codebase evolves.
 
-## Patent Claim 4 — Adaptive Onboarding Guide Generator
+Novel aspect: the truth pack as a portable, diff-able, source-anchored IP artifact separable from the analysis engine.
 
-A method for generating adaptive, developer-personalized onboarding guides from truth packs, comprising:
-- Personalization signals derived from the developer's prior interaction history and declared expertise level;
-- Dynamic section ordering that surfaces highest-risk footguns first for safety-critical onboarding;
-- Live refresh that re-generates affected guide sections when the underlying truth pack changes.
+### Claim 3: Lie Detection Engine
+
+A method for automatically identifying contradictions between natural-language documentation and executable code behavior, comprising:
+- Extraction of claims from README, docstrings, and inline comments;
+- Cross-reference of extracted claims against static analysis of actual code paths;
+- Classification of each claim as: verified, unverified, contradicted, or unknown;
+- Emission of a structured "lie report" with severity scores and source anchors.
+
+Novel aspect: automated claim-level contradiction detection between prose documentation and code semantics as a pipeline output.
+
+### Claim 4: Onboarding Fear-Surface Mapper
+
+A system for computing the "fear surface" of a codebase — the set of entry points, abstractions, and patterns most likely to confuse or block a new developer — comprising:
+- Complexity scoring of public interfaces weighted by documentation quality;
+- Detection of implicit contracts (behaviors assumed but not stated);
+- Ranking of modules by onboarding friction score;
+- Export of fear-surface map for consumption by adaptive onboarding UI systems.
+
+Novel aspect: fear surface as a computable, ranked, exportable metric derived from static analysis.
 
 ---
 
 ## Prior Art Statement
 
-To the best of the inventor's knowledge, no prior art exists for the combination of (a) automated contradiction detection between documentation and code behavior, (b) the truth pack serialization protocol, and (c) adaptive footgun-first onboarding guide generation from static analysis outputs.
+Inventor has reviewed available prior art including static analysis tools (pylint, mypy, semgrep), documentation linters, and onboarding platforms. None implement guarantee-scoped truth extraction, lie detection at the claim level, or fear-surface mapping as defined above. Conception date: 2026-05-18. First reduction to practice: initial commit in this repository.
 
 ---
 

@@ -7,37 +7,28 @@
 
 ## Proprietary Components
 
-| Component | Description | Copyright |
+| Component | Description | Copyright Holder |
 |---|---|---|
-| `core/` | Truth-extraction engine, contradiction detector, footgun scanner | © 2026 Haley Ann Bird |
-| `api/` | REST API layer serving truth packs | © 2026 Haley Ann Bird |
-| `main.py` | Orchestration entrypoint | © 2026 Haley Ann Bird |
-| `ARCHITECTURE.md` | System design documentation | © 2026 Haley Ann Bird |
-| All truth pack schemas | Versioned data structure definitions | © 2026 Haley Ann Bird |
+| `core/` | Truth-extraction engine, guarantee scanner, lie detector | Haley Ann Bird |
+| `api/` | Truth pack API, route analysis endpoints | Haley Ann Bird |
+| `main.py` | Orchestration entry point | Haley Ann Bird |
+| `ARCHITECTURE.md` | System design specification | Haley Ann Bird |
+| All IP/legal docs | LICENSE, NOTICE, PATENT, IP_DISCLOSURE, IP_DECLARATION | Haley Ann Bird |
 
 ---
 
 ## Third-Party Components
 
-| Component | License | Notes |
+| Component | License | Source |
 |---|---|---|
-| Python standard library | PSF License | No modification |
-| FastAPI | MIT | API framework |
-| Uvicorn | BSD-3-Clause | ASGI server |
-| Pydantic | MIT | Schema validation |
-| GitPython | BSD-3-Clause | Git repo access |
-| Tree-sitter | MIT | Syntax parsing |
+| Python standard library | PSF License | python.org |
+| FastAPI | MIT | github.com/tiangolo/fastapi |
+| tree-sitter | MIT | github.com/tree-sitter/tree-sitter |
+| networkx | BSD-3-Clause | networkx.org |
+| requests | Apache 2.0 | github.com/psf/requests |
 
 See `NOTICE` for full attribution text.
 
 ---
 
-## License
-
-This software is licensed under the Business Source License 1.1.  
-Change Date: 2029-05-18. Change License: Apache 2.0.  
-See `LICENSE` for full terms.
-
----
-
-*Haley Ann Bird — Fishers, Indiana, USA — 2026*
+*No third-party component grants any rights to the proprietary logic, architecture, or methods of Sourcetrace.*

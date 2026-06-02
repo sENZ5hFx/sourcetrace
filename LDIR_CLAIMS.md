@@ -1,38 +1,38 @@
-# IP Framework — Sourcetrace
+# LDIR IP Framework — Sourcetrace
 
-**Product:** Sourcetrace  
-**Inventor:** Haley Ann Bird (sole)  
-**Date:** 2026-05-18  
-
----
-
-## Four-Tier IP Framework
-
-### Tier 1 — Copyright
-All source code, documentation, schemas, and architectural designs in this repository are protected under U.S. copyright law. Copyright © 2026 Haley Ann Bird. Registration eligible upon commercial launch.
-
-### Tier 2 — Trade Secrets
-The following elements are designated trade secrets under the Defend Trade Secrets Act (DTSA), 18 U.S.C. § 1836:
-- Internal scoring algorithms used by the contradiction detector;
-- Footgun classification taxonomy and weighting system;
-- Truth pack schema versioning and backward-compatibility protocol;
-- The specific heuristics used to distinguish documented vs. observed behavior.
-
-These elements are not disclosed in this repository. Misappropriation is subject to DTSA statutory and exemplary damages.
-
-### Tier 3 — Patent
-Four patent claims are disclosed in `PATENT.md`. All claims originate with sole inventor Haley Ann Bird. First reduction to practice evidenced by Git commit history.
-
-### Tier 4 — Trademark
-Sourcetrace™ is a trademark of Haley Ann Bird / Swixixle. Unauthorized use of the name or logo in competing products is prohibited.
+**Product:** Sourcetrace — Automated Truth-Extraction Engine  
+**Inventor:** Haley Ann Bird  
+**Framework:** LDIR (Lifetime Data, IP, Rights) 4-Tier Protection Model  
 
 ---
 
-## Enforcement
+## Tier 1: Copyright
 
-Violation of any tier will be pursued under applicable federal and Indiana state law.  
-Contact: **legal@haleybird.dev**
+All source code, documentation, architecture diagrams, and data schemas in this repository are protected by copyright law from the moment of creation. Copyright © 2026 Haley Ann Bird. Registered jurisdiction: United States.
+
+## Tier 2: Trade Secrets
+
+The following elements are designated as trade secrets under the Defend Trade Secrets Act (DTSA), 18 U.S.C. § 1836:
+
+- The specific algorithm for separating guaranteed vs documented behavior in polyglot codebases;
+- The scoring model used to rank fear-surface complexity;
+- The truth pack schema versioning and diff semantics;
+- Internal thresholds and heuristics for lie detection classification.
+
+These elements are maintained in confidence and not disclosed in public documentation.
+
+## Tier 3: Patent-Pending Methods
+
+See `PATENT.md` for four patent-pending claims covering:
+1. Guarantee-scoped static analysis pipeline
+2. Cross-codebase truth pack schema
+3. Lie detection engine
+4. Onboarding fear-surface mapper
+
+## Tier 4: Trademark
+
+**Sourcetrace™** is a trademark of Haley Ann Bird / Swixixle. Unauthorized use of the Sourcetrace name, logo, or brand in competing products or services is prohibited.
 
 ---
 
-*Haley Ann Bird — Fishers, Indiana, USA — 2026*
+*Haley Ann Bird — Swixixle / sENZ5hFx — 2026*
