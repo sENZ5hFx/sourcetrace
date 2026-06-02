@@ -1,0 +1,16 @@
+# CODEOWNERS — Sourcetrace
+# All files owned by Haley Ann Bird (@sENZ5hFx)
+# Legal and IP files require explicit owner approval for any modification
+
+* @sENZ5hFx
+
+# Legal / IP files — highest protection tier
+LICENSE @sENZ5hFx
+NOTICE @sENZ5hFx
+IP_DECLARATION.md @sENZ5hFx
+IP_DISCLOSURE.md @sENZ5hFx
+PATENT.md @sENZ5hFx
+COPYRIGHT_AND_ATTRIBUTIONS.md @sENZ5hFx
+LDIR_CLAIMS.md @sENZ5hFx
+TRADEMARK.md @sENZ5hFx
+SECURITY.md @sENZ5hFx
