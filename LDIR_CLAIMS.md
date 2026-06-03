@@ -1,42 +1,41 @@
-# LDIR IP Framework — sourcetrace
+# LDIR IP Framework — Sourcetrace
 
-**Product:** sourcetrace — Automated Truth-Extraction Engine  
-**Inventor:** Haley Ann Bird  
-**Date:** 2026-06-02  
-
----
-
-## Four-Tier IP Protection Framework
-
-### Tier 1 — Copyright
-
-All source code, documentation, architecture specifications, schemas, and output formats in this repository are protected by copyright as original works of authorship by Haley Ann Bird, effective from the date of first commit. Registration may be pursued at the Register of Copyrights.
-
-### Tier 2 — Trade Secret
-
-The following components are designated as trade secrets under the Defend Trade Secrets Act (DTSA), 18 U.S.C. § 1836, and Indiana state trade secret law:
-
-- The specific divergence scoring algorithm and confidence weighting model used in the Static-Behavioral Divergence Detector;
-- The footgun classification taxonomy and severity scoring rubric;
-- The truth pack schema versioning and compatibility resolution logic;
-- Internal thresholds, model weights, and heuristic parameters not published in this repository.
-
-These components derive independent economic value from not being generally known and are subject to reasonable measures to maintain their secrecy.
-
-### Tier 3 — Patent
-
-Four patentable inventions are disclosed in `PATENT.md`. Patent applications may be filed at the USPTO. The disclosure date and reduction-to-practice evidence are established by the Git commit history of this repository.
-
-### Tier 4 — Trademark
-
-The name **sourcetrace™** and associated logos are common law trademarks of Haley Ann Bird / Swixixle. Unauthorized use in competing products or services is prohibited.
+**Product:** Sourcetrace — Automated Truth-Extraction Engine
+**Inventor:** Haley Ann Bird
+**Date:** 2026-06-03
 
 ---
 
-## Enforcement
+## Tier 1 — Copyright
 
-Violation of any tier of this framework will be pursued to the fullest extent of applicable law. Contact: **legal@haleybird.dev**
+All source code, architecture specifications, truth pack format definitions, and documentation in this repository are copyright © 2026 Haley Ann Bird under the Berne Convention. Copyright attaches automatically at creation. No registration required for protection.
+
+## Tier 2 — Trade Secret
+
+The following elements are designated confidential trade secrets under the Defend Trade Secrets Act (DTSA), 18 U.S.C. § 1836:
+
+- Specific contradiction-detection heuristics and their confidence scoring weights;
+- Footgun pattern library and blast-radius scoring algorithm;
+- Truth pack schema versioning strategy and field canonicalization rules;
+- Internal static analysis traversal order and caching strategy.
+
+These elements are not published, are protected by BSL-1.1 use restrictions, and are maintained as confidential.
+
+## Tier 3 — Patent
+
+Four patentable inventions are claimed in `PATENT.md`:
+1. Automated Structural Truth Extraction
+2. Footgun & Failure Mode Cataloging
+3. Source Truth Pack Format
+4. Onboarding Guide Generation from Truth Packs
+
+Provisional patent application preparation is in progress. Priority date is established by this repository's commit history.
+
+## Tier 4 — Trademark
+
+See `TRADEMARK.md` for active trademark claims.
 
 ---
 
-*Haley Ann Bird — Swixixle / sENZ5hFx — 2026-06-02*
+*Haley Ann Bird — Swixixle / sENZ5hFx*
+*2026-06-03*

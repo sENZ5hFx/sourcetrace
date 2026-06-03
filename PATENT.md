@@ -1,68 +1,62 @@
-# Patent Claims — sourcetrace
+# Patent Claims — Sourcetrace
+# Automated Truth-Extraction & Codebase Reality Mapping Engine
 
-**Product:** sourcetrace — Automated Truth-Extraction Engine  
-**Inventor:** Haley Ann Bird (sole)  
-**Organization:** Swixixle / sENZ5hFx  
-**Disclosure Date:** 2026-05-18  
-**License:** Business Source License 1.1 — Change Date: 2029-05-18 → Apache 2.0  
+**Inventor:** Haley Ann Bird (sole)
+**Organization:** Swixixle / sENZ5hFx
+**Conception Date:** 2026-05-18
+**Reduction to Practice:** This repository and its commit history
+**License:** Business Source License 1.1 — Change Date: 2029-05-18 → Apache 2.0
+
+---
+
+## Claim 1 — Automated Structural Truth Extraction
+
+A computer-implemented method for automated truth extraction from software repositories comprising:
+- statically analyzing source code, configuration files, and infrastructure definitions to derive a machine-verifiable "reality map" distinct from developer-authored documentation;
+- detecting contradictions between stated behavior in README/docs and actual implemented behavior in code;
+- emitting a structured "truth pack" artifact encoding guaranteed behaviors, failure modes, and footguns with confidence scores;
+- operating without execution or runtime instrumentation, relying solely on static analysis and semantic parsing.
+
+Novel aspect: the explicit contradiction-detection layer between documentation claims and code reality, producing a scored discrepancy manifest.
+
+## Claim 2 — Footgun & Failure Mode Cataloging
+
+A system for automatically identifying and cataloging latent failure modes in software systems comprising:
+- pattern-matched detection of known footgun categories (unhandled exceptions, silent failures, credential exposure vectors, race conditions) across the full codebase;
+- ranking footguns by exploitability and blast radius using a configurable severity model;
+- associating each footgun with the specific code location, call chain, and downstream consumers;
+- emitting footgun records as structured data consumable by downstream onboarding and documentation systems.
+
+Novel aspect: the combination of (a) footgun cataloging as a first-class pipeline output, (b) blast-radius scoring, and (c) downstream consumption interface for onboarding systems.
+
+## Claim 3 — Source Truth Pack Format
+
+A structured data format for encoding verified software system reality comprising fields for:
+- guaranteed_behaviors: behaviors the system provably exhibits under all analyzed conditions;
+- contradiction_manifest: list of documentation claims contradicted by code evidence;
+- footgun_catalog: ranked list of latent failure modes with location and severity;
+- dependency_reality: actual vs. declared dependency graph with version conflict detection;
+- coverage_gaps: modules and code paths excluded from analysis with stated reasons.
+
+Novel aspect: the truth_pack as a portable, versioned, machine-readable contract between a codebase and its consumers.
+
+## Claim 4 — Onboarding Guide Generation from Truth Packs
+
+A method for generating interactive, fear-free onboarding experiences from truth pack artifacts comprising:
+- consuming a truth pack as sole input without access to the originating repository;
+- rendering a guided exploration interface that surfaces safe entry points, warns on footguns, and presents the contradiction manifest as interactive callouts;
+- generating a "lie detector" layer that flags discrepancies between what documentation promises and what truth pack evidence confirms.
+
+Novel aspect: the decoupled, truth-pack-only onboarding generator that produces a lie-detector layer as a first-class UI component.
 
 ---
 
 ## Prior Art Statement
 
-To the best of the inventor's knowledge, no prior art exists that discloses the specific combination of methods described below. Prior art searches were conducted via USPTO, Google Patents, arXiv, and GitHub as of the disclosure date. All four inventions below are believed to be novel and non-obvious.
+To the inventor's knowledge, no prior system combines automated contradiction detection between documentation and code reality, footgun cataloging with blast-radius scoring, and a portable truth pack format as described herein. Standard static analysis tools (ESLint, SonarQube, Semgrep) detect code defects but do not produce documentation-vs-reality contradiction manifests or truth pack artifacts.
 
 ---
 
-## Claim 1 — Static-Behavioral Divergence Detector
-
-A system and method for automatically detecting divergence between static documentation (README, docstrings, comments, changelogs) and observed runtime behavioral signals (test outputs, API response schemas, error logs, CI artifacts) within a software repository, comprising:
-
-- A multi-source ingestion layer that parses documentation artifacts and runtime artifacts from the same repository into a unified canonical schema;
-- A divergence scoring engine that computes a per-claim confidence score for each documented assertion against runtime evidence;
-- A structured output layer that emits a ranked list of "documentation lies" — documented claims with evidence of falsity or absence of supporting runtime evidence;
-- A configurable threshold system that classifies divergences as critical, warning, or informational.
-
-## Claim 2 — Footgun Surface Mapper
-
-A system and method for automatically identifying and ranking dangerous usage patterns ("footguns") within a codebase by:
-
-- Parsing source code, test files, and issue history to extract patterns associated with prior failures, exceptions, or misuse;
-- Scoring each identified pattern by frequency, severity of downstream consequence, and visibility in documentation;
-- Emitting a structured "footgun map" that assigns each dangerous pattern a canonical location, usage context, and recommended mitigation;
-- Integrating with onboarding documentation generators to surface footgun warnings at the point of first developer contact.
-
-## Claim 3 — Structured Reality Map Generator
-
-A system and method for transforming an arbitrary software codebase into a machine-readable and human-readable "reality map" that distinguishes:
-
-- Guaranteed behaviors (backed by tests, contracts, or formal verification);
-- Assumed behaviors (present in documentation but untested);
-- Unknown behaviors (code paths with no documentation or test coverage);
-- Dangerous behaviors (code paths with known failure modes);
-
-where the map is generated fully automatically without human annotation and is exportable as structured JSON for downstream consumption by onboarding tools, AI assistants, and audit systems.
-
-## Claim 4 — Truth Pack Protocol
-
-A method for packaging the output of a codebase truth-extraction run into a versioned, signed, portable artifact ("truth pack") comprising:
-
-- A canonical reality map as defined in Claim 3;
-- A divergence report as defined in Claim 1;
-- A footgun map as defined in Claim 2;
-- A provenance block recording the source commit SHA, extraction timestamp, extractor version, and operator identity;
-- A schema version identifier enabling downstream consumers to validate compatibility;
-
-such that a truth pack can be consumed by any conforming downstream tool (e.g., onboarding guide renderers, AI context injectors, audit dashboards) without access to the original source repository.
-
----
-
-## Inventorship Statement
-
-I, Haley Ann Bird, conceived of and reduced to practice all four inventions described herein without co-inventors. Conception date: on or about 2026-05-18. First reduction to practice evidenced by the initial commit SHA in this repository.
-
----
-
-*Haley Ann Bird — sole inventor*  
-*Fishers, Indiana, USA*  
-*2026-05-18*
+*Haley Ann Bird — sole inventor*
+*Fishers, Indiana, USA*
+*2026-06-03*

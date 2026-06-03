@@ -1,8 +1,8 @@
 # Security Policy
 
-**Product:** sourcetrace — Automated Truth-Extraction Engine  
-**Maintainer:** Haley Ann Bird  
-**Organization:** Swixixle / sENZ5hFx  
+**Product:** Sourcetrace — Automated Truth-Extraction & Codebase Reality Mapping Engine
+**Maintainer:** Haley Ann Bird
+**Organization:** Swixixle / sENZ5hFx
 
 ---
 
@@ -10,11 +10,11 @@
 
 This security policy covers all code, APIs, and integrations within this repository, including:
 
-- The truth-extraction core engine and all static analysis parsers;
-- The divergence scoring engine and footgun mapper;
-- The truth pack assembly and signing layer;
-- The REST API layer and all output schema definitions;
-- Railway deployment infrastructure and Procfile configuration.
+- The static analysis and truth extraction core;
+- The contradiction detection and footgun cataloging engine;
+- The truth pack generation and serialization layer;
+- The API serving layer and all external endpoints;
+- Railway deployment configuration.
 
 ## Supported Versions
 
@@ -28,12 +28,12 @@ Only the latest commit on `main` is actively maintained.
 ## Threat Model
 
 1. **Credential leakage** — API keys or tokens committed to history or exposed in pipeline logs;
-2. **Truth pack poisoning** — maliciously crafted repositories designed to produce false or misleading truth packs that corrupt downstream consumers;
-3. **IP exfiltration via API** — systematic querying of the truth-extraction API to reconstruct proprietary divergence scoring and footgun detection logic from outputs;
-4. **Parser injection** — malformed source files designed to exploit vulnerabilities in the static analysis or tree-sitter parsing layer;
+2. **Truth pack tampering** — unauthorized modification of emitted truth pack artifacts to suppress or alter footgun or contradiction findings;
+3. **IP exfiltration via API** — systematic querying of the truth extraction API to reconstruct proprietary analysis heuristics from outputs;
+4. **Malicious repository input** — crafted repositories designed to exploit parser vulnerabilities in the static analysis core;
 5. **Dependency confusion** — malicious packages introduced via `requirements.txt` mimicking legitimate dependencies;
-6. **Railway/deployment exposure** — misconfigured deployment environment exposing internal API endpoints or debug surfaces;
-7. **Schema version spoofing** — crafted truth packs with falsified provenance blocks or schema version identifiers.
+6. **Deployment exposure** — Railway misconfiguration exposing internal analysis endpoints without authentication;
+7. **Output injection** — truth pack serialization exploits embedding executable content in emitted artifacts.
 
 ## Reporting a Vulnerability
 
@@ -54,11 +54,11 @@ Do **not** open a public GitHub issue to report security vulnerabilities.
 ## Security Hardening Requirements
 
 - All API keys and tokens must be loaded via environment variables, never hardcoded;
-- No credentials may be committed to repository history;
-- All repository inputs must be sandboxed before parsing — no arbitrary code execution from analyzed repos;
-- Truth pack outputs must not expose internal scoring parameters or trade secret thresholds;
+- Truth pack outputs must be schema-validated before serialization;
+- Repository inputs must be sandboxed — analysis must not execute arbitrary code from analyzed repos;
+- API endpoints must require authentication tokens before serving truth pack data;
 - Dependency updates must be reviewed before merging;
-- API endpoints must validate and rate-limit all inputs.
+- Deployment config must not expose debug or internal endpoints in production.
 
 ## Disclosure Policy
 

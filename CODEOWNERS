@@ -1,10 +1,10 @@
-# CODEOWNERS — sourcetrace
+# CODEOWNERS — Sourcetrace
 # All files owned by Haley Ann Bird (@sENZ5hFx)
-# Legal and IP files require owner review before any merge
+# Legal and IP files require explicit owner review before any merge
 
 * @sENZ5hFx
 
-# IP and legal documents — explicit owner lock
+# IP and legal files — explicit owner approval required
 LICENSE @sENZ5hFx
 NOTICE @sENZ5hFx
 PATENT.md @sENZ5hFx
