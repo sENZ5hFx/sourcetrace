@@ -1,4 +1,4 @@
-# Copyright and Attributions — Sourcetrace
+# Copyright and Attributions — sourcetrace
 
 **Copyright © 2026 Haley Ann Bird. All rights reserved.**  
 **Organization:** Swixixle / sENZ5hFx  
@@ -9,11 +9,11 @@
 
 | Component | Description | Copyright Holder |
 |---|---|---|
-| `core/` | Truth-extraction engine, guarantee scanner, lie detector | Haley Ann Bird |
-| `api/` | Truth pack API, route analysis endpoints | Haley Ann Bird |
-| `main.py` | Orchestration entry point | Haley Ann Bird |
-| `ARCHITECTURE.md` | System design specification | Haley Ann Bird |
-| All IP/legal docs | LICENSE, NOTICE, PATENT, IP_DISCLOSURE, IP_DECLARATION | Haley Ann Bird |
+| `core/` | Truth-extraction engine, divergence scorer, footgun mapper | Haley Ann Bird |
+| `api/` | REST API layer and output schema definitions | Haley Ann Bird |
+| `main.py` | Orchestration entry point and truth pack assembler | Haley Ann Bird |
+| `ARCHITECTURE.md` | System design and protocol specification | Haley Ann Bird |
+| All IP documents | PATENT.md, IP_DISCLOSURE.md, IP_DECLARATION.md | Haley Ann Bird |
 
 ---
 
@@ -23,12 +23,15 @@
 |---|---|---|
 | Python standard library | PSF License | python.org |
 | FastAPI | MIT | github.com/tiangolo/fastapi |
+| Pydantic | MIT | github.com/pydantic/pydantic |
+| GitPython | BSD-3-Clause | github.com/gitpython-developers/GitPython |
 | tree-sitter | MIT | github.com/tree-sitter/tree-sitter |
-| networkx | BSD-3-Clause | networkx.org |
-| requests | Apache 2.0 | github.com/psf/requests |
 
-See `NOTICE` for full attribution text.
+See `NOTICE` for full third-party attribution text.
 
 ---
 
-*No third-party component grants any rights to the proprietary logic, architecture, or methods of Sourcetrace.*
+## License
+
+This repository is licensed under the Business Source License 1.1.  
+See `LICENSE` for full terms. Change Date: 2029-05-18 → Apache 2.0.

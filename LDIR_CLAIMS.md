@@ -1,38 +1,42 @@
-# LDIR IP Framework — Sourcetrace
+# LDIR IP Framework — sourcetrace
 
-**Product:** Sourcetrace — Automated Truth-Extraction Engine  
+**Product:** sourcetrace — Automated Truth-Extraction Engine  
 **Inventor:** Haley Ann Bird  
-**Framework:** LDIR (Lifetime Data, IP, Rights) 4-Tier Protection Model  
+**Date:** 2026-06-02  
 
 ---
 
-## Tier 1: Copyright
+## Four-Tier IP Protection Framework
 
-All source code, documentation, architecture diagrams, and data schemas in this repository are protected by copyright law from the moment of creation. Copyright © 2026 Haley Ann Bird. Registered jurisdiction: United States.
+### Tier 1 — Copyright
 
-## Tier 2: Trade Secrets
+All source code, documentation, architecture specifications, schemas, and output formats in this repository are protected by copyright as original works of authorship by Haley Ann Bird, effective from the date of first commit. Registration may be pursued at the Register of Copyrights.
 
-The following elements are designated as trade secrets under the Defend Trade Secrets Act (DTSA), 18 U.S.C. § 1836:
+### Tier 2 — Trade Secret
 
-- The specific algorithm for separating guaranteed vs documented behavior in polyglot codebases;
-- The scoring model used to rank fear-surface complexity;
-- The truth pack schema versioning and diff semantics;
-- Internal thresholds and heuristics for lie detection classification.
+The following components are designated as trade secrets under the Defend Trade Secrets Act (DTSA), 18 U.S.C. § 1836, and Indiana state trade secret law:
 
-These elements are maintained in confidence and not disclosed in public documentation.
+- The specific divergence scoring algorithm and confidence weighting model used in the Static-Behavioral Divergence Detector;
+- The footgun classification taxonomy and severity scoring rubric;
+- The truth pack schema versioning and compatibility resolution logic;
+- Internal thresholds, model weights, and heuristic parameters not published in this repository.
 
-## Tier 3: Patent-Pending Methods
+These components derive independent economic value from not being generally known and are subject to reasonable measures to maintain their secrecy.
 
-See `PATENT.md` for four patent-pending claims covering:
-1. Guarantee-scoped static analysis pipeline
-2. Cross-codebase truth pack schema
-3. Lie detection engine
-4. Onboarding fear-surface mapper
+### Tier 3 — Patent
 
-## Tier 4: Trademark
+Four patentable inventions are disclosed in `PATENT.md`. Patent applications may be filed at the USPTO. The disclosure date and reduction-to-practice evidence are established by the Git commit history of this repository.
 
-**Sourcetrace™** is a trademark of Haley Ann Bird / Swixixle. Unauthorized use of the Sourcetrace name, logo, or brand in competing products or services is prohibited.
+### Tier 4 — Trademark
+
+The name **sourcetrace™** and associated logos are common law trademarks of Haley Ann Bird / Swixixle. Unauthorized use in competing products or services is prohibited.
 
 ---
 
-*Haley Ann Bird — Swixixle / sENZ5hFx — 2026*
+## Enforcement
+
+Violation of any tier of this framework will be pursued to the fullest extent of applicable law. Contact: **legal@haleybird.dev**
+
+---
+
+*Haley Ann Bird — Swixixle / sENZ5hFx — 2026-06-02*
