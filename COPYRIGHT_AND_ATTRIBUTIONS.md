@@ -1,35 +1,40 @@
-# Copyright and Attributions — Sourcetrace
+# Copyright & Attributions — Sourcetrace
 
 **Copyright © 2026 Haley Ann Bird. All rights reserved.**
 
----
+All source code, documentation, architecture, methods, algorithms, schemas, and
+derivative works in this repository are the exclusive intellectual property of
+Haley Ann Bird ("Owner"), operating under Swixixle / sENZ5hFx.
 
-## Proprietary Components
-
-| Component | Description | Owner |
-|---|---|---|
-| `core/` | Truth extraction engine, contradiction detector, footgun cataloger | Haley Ann Bird |
-| `api/` | Truth pack serving API and endpoint layer | Haley Ann Bird |
-| `main.py` | Orchestration entry point | Haley Ann Bird |
-| `ARCHITECTURE.md` | System design and pipeline specification | Haley Ann Bird |
-| Truth Pack Format | Structured reality-map artifact schema | Haley Ann Bird |
-| Contradiction Manifest | Documentation-vs-code discrepancy format | Haley Ann Bird |
-| Footgun Catalog | Ranked failure mode cataloging methodology | Haley Ann Bird |
+Use is governed by the LICENSE file (Business Source License 1.1).
+Unauthorized commercial use, reproduction, or distribution is prohibited.
 
 ---
 
-## Third-Party Components
+## Component Copyright Table
 
-| Component | License | Use |
+| Component | Description | Owner | License |
+|---|---|---|---|
+| `core/` | Truth-extraction engine, reality-gap scorer, footgun detector | Haley Ann Bird | BSL-1.1 |
+| `api/` | REST API layer exposing truth pack generation | Haley Ann Bird | BSL-1.1 |
+| `main.py` | Entry point and orchestration | Haley Ann Bird | BSL-1.1 |
+| `ARCHITECTURE.md` | System design documentation | Haley Ann Bird | BSL-1.1 |
+| All IP docs | PATENT, IP_DISCLOSURE, IP_DECLARATION, NOTICE | Haley Ann Bird | All rights reserved |
+
+---
+
+## Third-Party Attributions
+
+| Library | License | Use |
 |---|---|---|
 | Python standard library | PSF License | Core runtime |
-| FastAPI | MIT | API layer |
-| tree-sitter | MIT | Static AST parsing |
+| FastAPI | MIT | API framework |
+| tree-sitter | MIT | AST parsing |
 | GitPython | BSD-3-Clause | Repository traversal |
+| numpy | BSD-3-Clause | Scoring computations |
 
-See `NOTICE` for full third-party attribution.
+See `NOTICE` for complete third-party attribution list.
 
 ---
 
-*All proprietary components are the exclusive property of Haley Ann Bird.*
-*Use is governed by LICENSE (BSL-1.1).*
+*Haley Ann Bird — Swixixle / sENZ5hFx — 2026*

@@ -10,11 +10,11 @@
 
 This security policy covers all code, APIs, and integrations within this repository, including:
 
-- The static analysis and truth extraction core;
-- The contradiction detection and footgun cataloging engine;
-- The truth pack generation and serialization layer;
-- The API serving layer and all external endpoints;
-- Railway deployment configuration.
+- The core truth-extraction engine and AST analysis pipeline;
+- The reality-gap scoring and footgun detection modules;
+- The REST API layer and all external-facing endpoints;
+- The truth pack serialization and deserialization layer;
+- All deployment infrastructure (Railway, Procfile, nixpacks).
 
 ## Supported Versions
 
@@ -28,12 +28,12 @@ Only the latest commit on `main` is actively maintained.
 ## Threat Model
 
 1. **Credential leakage** — API keys or tokens committed to history or exposed in pipeline logs;
-2. **Truth pack tampering** — unauthorized modification of emitted truth pack artifacts to suppress or alter footgun or contradiction findings;
-3. **IP exfiltration via API** — systematic querying of the truth extraction API to reconstruct proprietary analysis heuristics from outputs;
-4. **Malicious repository input** — crafted repositories designed to exploit parser vulnerabilities in the static analysis core;
-5. **Dependency confusion** — malicious packages introduced via `requirements.txt` mimicking legitimate dependencies;
-6. **Deployment exposure** — Railway misconfiguration exposing internal analysis endpoints without authentication;
-7. **Output injection** — truth pack serialization exploits embedding executable content in emitted artifacts.
+2. **IP exfiltration via API** — systematic querying of the truth pack API to reconstruct proprietary scoring logic from outputs;
+3. **Truth pack tampering** — unauthorized modification of serialized truth pack artifacts to corrupt reality-gap findings;
+4. **Dependency confusion** — malicious packages introduced via `requirements.txt` updates;
+5. **AST parser abuse** — malformed source files crafted to trigger unintended behavior in the tree-sitter parsing layer;
+6. **Deployment misconfiguration** — Railway or nixpacks config exposing internal endpoints or debug surfaces;
+7. **Documentation lie injection** — crafted documentation inputs designed to manipulate lie-detection classification outputs.
 
 ## Reporting a Vulnerability
 
@@ -54,11 +54,11 @@ Do **not** open a public GitHub issue to report security vulnerabilities.
 ## Security Hardening Requirements
 
 - All API keys and tokens must be loaded via environment variables, never hardcoded;
-- Truth pack outputs must be schema-validated before serialization;
-- Repository inputs must be sandboxed — analysis must not execute arbitrary code from analyzed repos;
-- API endpoints must require authentication tokens before serving truth pack data;
+- No credentials may be committed to repository history;
+- Truth pack outputs must not include raw source file contents that expose confidential codebases;
+- API endpoints must rate-limit and authenticate requests to prevent bulk IP extraction;
 - Dependency updates must be reviewed before merging;
-- Deployment config must not expose debug or internal endpoints in production.
+- Deployment config must not expose debug endpoints or internal scoring parameters in production.
 
 ## Disclosure Policy
 
