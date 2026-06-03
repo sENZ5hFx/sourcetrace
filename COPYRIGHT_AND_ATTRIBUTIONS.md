@@ -23,9 +23,9 @@
 | Component | License | Use |
 |---|---|---|
 | Python standard library | PSF License | Runtime |
-| Flask / FastAPI | MIT / Apache 2.0 | API layer |
 | GitPython | BSD-3-Clause | Git integration |
-| tree-sitter | MIT | AST parsing |
+| tree-sitter (if used) | MIT | AST parsing |
+| Flask / FastAPI (if used) | MIT / Apache 2.0 | API layer |
 
 See `NOTICE` for full attribution text.
 
@@ -33,6 +33,6 @@ See `NOTICE` for full attribution text.
 
 ## Attribution Requirements
 
-Any permitted use must retain this copyright notice and all IP disclosure files in their original form.
+Any permitted use must retain this copyright notice and all IP disclosure files in their original form. Removal or modification of copyright notices is prohibited.
 
 *Haley Ann Bird — Swixixle / sENZ5hFx — 2026*

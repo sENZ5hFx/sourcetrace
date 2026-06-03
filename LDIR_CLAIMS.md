@@ -4,21 +4,23 @@
 **Inventor:** Haley Ann Bird (sole)
 **Date:** 2026-05-18
 
-This file asserts the four-tier IP framework over Sourcetrace as a component of the broader LDIR system and NeuroCatalyst™ ecosystem.
+This file asserts the four-tier IP framework over Sourcetrace as a component of the broader LDIR (Lifetime Data Insight Report) system and NeuroCatalyst™ ecosystem.
 
 ---
 
 ## Tier 1 — Copyright
 
-All source code, documentation, architecture diagrams, and IP disclosure files are protected by copyright effective from the date of first commit.
+All source code, documentation, architecture diagrams, and IP disclosure files in this repository are protected by copyright law effective from the date of first commit. Copyright is automatically asserted under 17 U.S.C. § 102 and Berne Convention member states.
 
-**Owner:** Haley Ann Bird | **Year:** 2026 | **First Commit SHA:** see `.ip-timestamp`
+**Owner:** Haley Ann Bird
+**Year:** 2026
+**First Commit SHA:** see `.ip-timestamp`
 
 ---
 
 ## Tier 2 — Trade Secrets
 
-Designated trade secrets under DTSA (18 U.S.C. § 1836) and Indiana state law:
+The following elements are designated as trade secrets under DTSA (18 U.S.C. § 1836) and Indiana state trade secret law:
 
 - The divergence scoring algorithm and threshold configuration
 - The footgun taxonomy definitions and severity weight matrix
@@ -30,7 +32,7 @@ Designated trade secrets under DTSA (18 U.S.C. § 1836) and Indiana state law:
 
 ## Tier 3 — Patent
 
-Four patent claims asserted in `PATENT.md`:
+Four patent claims are asserted in `PATENT.md`:
 1. Structural Reality Extraction Engine
 2. Footgun Detection and Annotation System
 3. Interactive Onboarding Guide Generator
@@ -40,8 +42,12 @@ Four patent claims asserted in `PATENT.md`:
 
 ## Tier 4 — Trademark
 
-See `TRADEMARK.md`. The Sourcetrace name and marks are claimed by Haley Ann Bird / Swixixle.
+See `TRADEMARK.md`. The Sourcetrace name and associated marks are claimed by Haley Ann Bird / Swixixle.
 
 ---
+
+## Enforcement
+
+Violation of any tier will be pursued under the maximum remedies available under applicable federal and state law.
 
 *Haley Ann Bird — 2026*

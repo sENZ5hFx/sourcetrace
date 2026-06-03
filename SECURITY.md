@@ -14,10 +14,12 @@ This security policy covers all code, APIs, and integrations within this reposit
 - The divergence detection and footgun identification pipeline;
 - The truth pack schema, versioning, and diff engine;
 - The REST API layer and all external-facing endpoints;
-- The cross-repo federation layer and update propagation;
-- All deployment infrastructure (Railway, Procfile, nixpacks).
+- The cross-repo federation layer and upstream/downstream update propagation;
+- All deployment infrastructure (Railway, Procfile, nixpacks, etc.).
 
 ## Supported Versions
+
+Only the latest commit on `main` is actively maintained.
 
 | Version | Supported |
 |---|---|
@@ -26,21 +28,21 @@ This security policy covers all code, APIs, and integrations within this reposit
 
 ## Threat Model
 
-1. **Credential leakage** — API keys committed to history or exposed in logs;
+1. **Credential leakage** — API keys or tokens committed to history or exposed in logs;
 2. **Truth pack exfiltration** — unauthorized access to generated truth packs containing proprietary architectural knowledge;
-3. **IP method reconstruction** — querying API outputs at scale to reverse-engineer divergence scoring or footgun detection algorithms;
-4. **Dependency confusion** — malicious packages via `requirements.txt`;
-5. **Source injection** — malformed input codebases exploiting parser logic;
-6. **Federation poisoning** — malicious upstream truth packs corrupting downstream reality maps;
-7. **Deployment exposure** — Railway/nixpacks misconfiguration exposing debug endpoints;
+3. **IP method reconstruction** — querying the API at scale to reverse-engineer divergence scoring or footgun detection algorithms;
+4. **Dependency confusion** — malicious packages introduced via `requirements.txt`;
+5. **Source injection** — malformed input codebases crafted to exploit parser logic;
+6. **Federation poisoning** — malicious upstream truth packs injected to corrupt downstream reality maps;
+7. **Deployment exposure** — Railway or nixpacks misconfiguration exposing internal services;
 8. **Output exfiltration** — truth packs downloaded at scale to reconstruct proprietary methods.
 
 ## Reporting a Vulnerability
 
-Do **not** open a public GitHub issue.
+Do **not** open a public GitHub issue for security vulnerabilities.
 
-- Use the **"Security" tab → "Report a vulnerability"** on GitHub.
-- Include: description, reproduction steps, affected module, commit SHA, suggested fix.
+- **GitHub Private Vulnerability Reporting:** Use the "Security" tab → "Report a vulnerability."
+- Include: description, reproduction steps, affected module, commit SHA, and optional suggested fix.
 
 ## Response Timeline
 
@@ -53,18 +55,17 @@ Do **not** open a public GitHub issue.
 
 ## Security Hardening Requirements
 
-- All API keys via environment variables only — never hardcoded;
-- No credentials committed to repository history;
-- All endpoints validate and sanitize input before processing;
-- Truth pack outputs must not expose raw file system paths or infrastructure details;
-- Dependencies reviewed before merging;
-- Federation ingestion must schema-validate upstream truth packs;
-- No debug endpoints in production;
-- Dry-run mode default for all destructive operations.
+- All API keys and tokens must be loaded via environment variables, never hardcoded;
+- No credentials may be committed to repository history;
+- All endpoints must validate and sanitize input before processing;
+- Truth pack outputs must not expose raw file system paths or internal infrastructure details;
+- Federation ingestion must validate and schema-check upstream truth packs before processing;
+- Railway deployment must not expose debug endpoints in production;
+- Dry-run mode must be default for any destructive analysis operation.
 
 ## Disclosure Policy
 
-Coordinated disclosure. Reporters credited in changelog unless anonymity requested.
+Coordinated disclosure model. Reporters credited in changelog unless anonymity requested.
 
 ---
 
