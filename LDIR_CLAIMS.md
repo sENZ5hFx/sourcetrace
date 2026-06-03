@@ -1,59 +1,47 @@
-# IP Framework — Sourcetrace
+# LDIR IP Framework — Sourcetrace
 
-**Product:** Sourcetrace — Automated Truth-Extraction & Codebase Reality Mapping Engine
+**Product:** Sourcetrace — Automated Truth-Extraction Engine
 **Inventor:** Haley Ann Bird (sole)
-**Organization:** Swixixle / sENZ5hFx
 **Date:** 2026-05-18
 
----
-
-## Four-Tier IP Framework
-
-### Tier 1 — Copyright
-
-All source code, documentation, architecture diagrams, schemas, and written works
-in this repository are protected by copyright from the moment of creation.
-Copyright © 2026 Haley Ann Bird. All rights reserved.
-No reproduction, distribution, or derivative works without express written permission.
-
-### Tier 2 — Trade Secrets
-
-The following elements are designated as trade secrets under the Defend Trade
-Secrets Act (DTSA), 18 U.S.C. § 1836, and Indiana state trade secret law:
-
-- The specific scoring weights and threshold parameters used in the reality-gap
-  detection engine;
-- The internal footgun classification taxonomy and priority weighting algorithm;
-- The truth pack schema versioning and migration strategy;
-- The lie-detection claim extraction NLP pipeline configuration;
-- Any unpublished downstream integrations, partner APIs, or SaaS implementations.
-
-Misappropriation is subject to DTSA statutory damages, exemplary damages (up to 2×
-actual), and attorney fees upon finding of willful misappropriation.
-
-### Tier 3 — Patent
-
-Four independently patentable inventions are disclosed in `PATENT.md`:
-1. Automated Codebase Reality-Gap Detection Engine
-2. Source-Truth Pack Format & Portability Protocol
-3. Lie-Detection Pass for Technical Documentation
-4. Interactive Fear-Free Onboarding Guide Generator
-
-Patent applications pending or in preparation. All rights reserved.
-
-### Tier 4 — Trademark
-
-See `TRADEMARK.md` for trademark claims. The name "Sourcetrace" and associated
-branding are claimed trademarks of Haley Ann Bird / Swixixle.
+This file asserts the four-tier IP framework over Sourcetrace as a component of the broader LDIR system and NeuroCatalyst™ ecosystem.
 
 ---
 
-## Enforcement
+## Tier 1 — Copyright
 
-Violation of any tier will be pursued to the full extent of applicable law.
-Contact: **legal@haleybird.dev**
+All source code, documentation, architecture diagrams, and IP disclosure files are protected by copyright effective from the date of first commit.
+
+**Owner:** Haley Ann Bird | **Year:** 2026 | **First Commit SHA:** see `.ip-timestamp`
 
 ---
 
-*Haley Ann Bird — sole inventor and IP owner*
-*Fishers, Indiana, USA — 2026-05-18*
+## Tier 2 — Trade Secrets
+
+Designated trade secrets under DTSA (18 U.S.C. § 1836) and Indiana state law:
+
+- The divergence scoring algorithm and threshold configuration
+- The footgun taxonomy definitions and severity weight matrix
+- The truth pack schema versioning and diff algorithm internals
+- The cross-repo federation resolution logic and conflict arbitration rules
+- Any unpublished downstream integrations or API products
+
+---
+
+## Tier 3 — Patent
+
+Four patent claims asserted in `PATENT.md`:
+1. Structural Reality Extraction Engine
+2. Footgun Detection and Annotation System
+3. Interactive Onboarding Guide Generator
+4. Cross-Codebase Truth Pack Federation
+
+---
+
+## Tier 4 — Trademark
+
+See `TRADEMARK.md`. The Sourcetrace name and marks are claimed by Haley Ann Bird / Swixixle.
+
+---
+
+*Haley Ann Bird — 2026*

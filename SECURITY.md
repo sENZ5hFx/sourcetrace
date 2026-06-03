@@ -1,6 +1,6 @@
 # Security Policy
 
-**Product:** Sourcetrace — Automated Truth-Extraction & Codebase Reality Mapping Engine
+**Product:** Sourcetrace — Automated Truth-Extraction Engine
 **Maintainer:** Haley Ann Bird
 **Organization:** Swixixle / sENZ5hFx
 
@@ -10,15 +10,14 @@
 
 This security policy covers all code, APIs, and integrations within this repository, including:
 
-- The core truth-extraction engine and AST analysis pipeline;
-- The reality-gap scoring and footgun detection modules;
+- The truth-extraction engine and all static analysis modules;
+- The divergence detection and footgun identification pipeline;
+- The truth pack schema, versioning, and diff engine;
 - The REST API layer and all external-facing endpoints;
-- The truth pack serialization and deserialization layer;
+- The cross-repo federation layer and update propagation;
 - All deployment infrastructure (Railway, Procfile, nixpacks).
 
 ## Supported Versions
-
-Only the latest commit on `main` is actively maintained.
 
 | Version | Supported |
 |---|---|
@@ -27,20 +26,21 @@ Only the latest commit on `main` is actively maintained.
 
 ## Threat Model
 
-1. **Credential leakage** — API keys or tokens committed to history or exposed in pipeline logs;
-2. **IP exfiltration via API** — systematic querying of the truth pack API to reconstruct proprietary scoring logic from outputs;
-3. **Truth pack tampering** — unauthorized modification of serialized truth pack artifacts to corrupt reality-gap findings;
-4. **Dependency confusion** — malicious packages introduced via `requirements.txt` updates;
-5. **AST parser abuse** — malformed source files crafted to trigger unintended behavior in the tree-sitter parsing layer;
-6. **Deployment misconfiguration** — Railway or nixpacks config exposing internal endpoints or debug surfaces;
-7. **Documentation lie injection** — crafted documentation inputs designed to manipulate lie-detection classification outputs.
+1. **Credential leakage** — API keys committed to history or exposed in logs;
+2. **Truth pack exfiltration** — unauthorized access to generated truth packs containing proprietary architectural knowledge;
+3. **IP method reconstruction** — querying API outputs at scale to reverse-engineer divergence scoring or footgun detection algorithms;
+4. **Dependency confusion** — malicious packages via `requirements.txt`;
+5. **Source injection** — malformed input codebases exploiting parser logic;
+6. **Federation poisoning** — malicious upstream truth packs corrupting downstream reality maps;
+7. **Deployment exposure** — Railway/nixpacks misconfiguration exposing debug endpoints;
+8. **Output exfiltration** — truth packs downloaded at scale to reconstruct proprietary methods.
 
 ## Reporting a Vulnerability
 
-Do **not** open a public GitHub issue to report security vulnerabilities.
+Do **not** open a public GitHub issue.
 
-- **GitHub Private Vulnerability Reporting:** Use the "Security" tab → "Report a vulnerability."
-- Include: description, reproduction steps, affected module, commit SHA, and optional suggested fix.
+- Use the **"Security" tab → "Report a vulnerability"** on GitHub.
+- Include: description, reproduction steps, affected module, commit SHA, suggested fix.
 
 ## Response Timeline
 
@@ -53,16 +53,18 @@ Do **not** open a public GitHub issue to report security vulnerabilities.
 
 ## Security Hardening Requirements
 
-- All API keys and tokens must be loaded via environment variables, never hardcoded;
-- No credentials may be committed to repository history;
-- Truth pack outputs must not include raw source file contents that expose confidential codebases;
-- API endpoints must rate-limit and authenticate requests to prevent bulk IP extraction;
-- Dependency updates must be reviewed before merging;
-- Deployment config must not expose debug endpoints or internal scoring parameters in production.
+- All API keys via environment variables only — never hardcoded;
+- No credentials committed to repository history;
+- All endpoints validate and sanitize input before processing;
+- Truth pack outputs must not expose raw file system paths or infrastructure details;
+- Dependencies reviewed before merging;
+- Federation ingestion must schema-validate upstream truth packs;
+- No debug endpoints in production;
+- Dry-run mode default for all destructive operations.
 
 ## Disclosure Policy
 
-Coordinated disclosure model. Reporters credited in changelog unless anonymity requested.
+Coordinated disclosure. Reporters credited in changelog unless anonymity requested.
 
 ---
 
