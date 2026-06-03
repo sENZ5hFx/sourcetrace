@@ -28,15 +28,22 @@ def init_ledger():
 def append_certificate(cert: dict) -> bool:
     conn = sqlite3.connect(DB_PATH)
     try:
-        conn.execute("""
+        conn.execute(
+            """
             INSERT INTO certificates
             (id, author, model, content_hash, timestamp, prev_hash, metadata)
             VALUES (?, ?, ?, ?, ?, ?, ?)
-        """, (
-            cert["id"], cert["author"], cert["model"],
-            cert["content_hash"], cert["timestamp"],
-            cert["prev_hash"], json.dumps(cert.get("metadata", {}))
-        ))
+        """,
+            (
+                cert["id"],
+                cert["author"],
+                cert["model"],
+                cert["content_hash"],
+                cert["timestamp"],
+                cert["prev_hash"],
+                json.dumps(cert.get("metadata", {})),
+            ),
+        )
         conn.commit()
         return True
     except Exception:
@@ -47,13 +54,20 @@ def append_certificate(cert: dict) -> bool:
 
 def get_certificate(cert_id: str) -> Optional[dict]:
     conn = sqlite3.connect(DB_PATH)
-    row = conn.execute(
-        "SELECT * FROM certificates WHERE id = ?", (cert_id,)
-    ).fetchone()
+    row = conn.execute("SELECT * FROM certificates WHERE id = ?", (cert_id,)).fetchone()
     conn.close()
     if not row:
         return None
-    keys = ["id", "author", "model", "content_hash", "timestamp", "prev_hash", "metadata", "chain_valid"]
+    keys = [
+        "id",
+        "author",
+        "model",
+        "content_hash",
+        "timestamp",
+        "prev_hash",
+        "metadata",
+        "chain_valid",
+    ]
     return dict(zip(keys, row))
 
 
@@ -68,9 +82,16 @@ def get_latest_hash() -> str:
 
 def get_full_ledger() -> list:
     conn = sqlite3.connect(DB_PATH)
-    rows = conn.execute(
-        "SELECT * FROM certificates ORDER BY timestamp ASC"
-    ).fetchall()
+    rows = conn.execute("SELECT * FROM certificates ORDER BY timestamp ASC").fetchall()
     conn.close()
-    keys = ["id", "author", "model", "content_hash", "timestamp", "prev_hash", "metadata", "chain_valid"]
+    keys = [
+        "id",
+        "author",
+        "model",
+        "content_hash",
+        "timestamp",
+        "prev_hash",
+        "metadata",
+        "chain_valid",
+    ]
     return [dict(zip(keys, r)) for r in rows]

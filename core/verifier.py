@@ -18,5 +18,5 @@ def verify_chain() -> dict:
         "valid": broken_at is None,
         "count": len(records),
         "broken_at": broken_at,
-        "message": "Chain intact" if not broken_at else f"Chain broken at {broken_at}"
+        "message": "Chain intact" if not broken_at else f"Chain broken at {broken_at}",
     }

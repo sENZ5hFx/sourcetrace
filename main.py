@@ -1,7 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from contextlib import asynccontextmanager
 from core.certifier import generate_certificate
-from core.ledger import init_ledger, append_certificate, get_certificate, get_latest_hash, get_full_ledger
+from core.ledger import (
+    init_ledger,
+    append_certificate,
+    get_certificate,
+    get_latest_hash,
+    get_full_ledger,
+)
 from core.verifier import verify_chain
 from api.models import CertifyRequest
 
@@ -16,7 +22,7 @@ app = FastAPI(
     title="sourcetrace",
     description="Certified Ledger Protocol — AI Content Provenance Engine",
     version="1.0.0",
-    lifespan=lifespan
+    lifespan=lifespan,
 )
 
 
@@ -34,7 +40,7 @@ def certify(req: CertifyRequest):
         author=req.author,
         model=req.model,
         prev_hash=prev,
-        metadata=req.metadata
+        metadata=req.metadata,
     )
     success = append_certificate(cert)
     if not success:
@@ -70,5 +76,5 @@ def export_bundle():
         "format": "clp-bundle-v1",
         "chain_valid": chain["valid"],
         "record_count": len(records),
-        "records": records
+        "records": records,
     }
