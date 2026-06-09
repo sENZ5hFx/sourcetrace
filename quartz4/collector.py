@@ -8,7 +8,9 @@ Continuously ingests from concurrent API streams:
   - NewsAPI (global events)
 
 Normalises all data into ConceptEvent objects and funnels
-them into the Labyrinth memory layer.
+them into the Labyrinth memory layer.  After each batch,
+passes the top concepts to the Sentinel for hypothesis
+detection.
 """
 
 import asyncio
@@ -37,10 +39,10 @@ class Collector:
 
     ARXIV_URL = "https://export.arxiv.org/api/query"
     NEWS_URL = "https://newsapi.org/v2/top-headlines"
-    ALPHA_VANTAGE_URL = "https://www.alphavantage.co/query"
 
-    def __init__(self, labyrinth, poll_interval: int = 300):
+    def __init__(self, labyrinth, sentinel=None, poll_interval: int = 300):
         self.labyrinth = labyrinth
+        self.sentinel = sentinel  # injected after Sentinel is constructed
         self.poll_interval = poll_interval
         self._tasks: list[asyncio.Task] = []
         self._running = False
@@ -62,7 +64,19 @@ class Collector:
         await asyncio.gather(*self._tasks, return_exceptions=True)
         logger.info("Collector stopped")
 
-    # ── arXiv ────────────────────────────────────────────────────
+    async def _after_batch(self) -> None:
+        """Post-ingest hook: run Sentinel scan over current top concepts."""
+        if self.sentinel is None:
+            return
+        try:
+            concepts = await self.labyrinth.top_concepts(limit=50)
+            alerts = await self.sentinel.scan(concepts)
+            if alerts:
+                logger.info("Sentinel: generated %d new alert(s)", len(alerts))
+        except Exception as exc:  # pragma: no cover
+            logger.warning("Sentinel scan failed: %s", exc)
+
+    # ── arXiv ──────────────────────────────────────────────
 
     async def _arxiv_loop(self):
         while self._running:
@@ -71,6 +85,7 @@ class Collector:
                 for event in events:
                     await self.labyrinth.ingest(event)
                 logger.info("arXiv: ingested %d concepts", len(events))
+                await self._after_batch()
             except Exception as exc:
                 logger.warning("arXiv fetch failed: %s", exc)
             await asyncio.sleep(self.poll_interval)
@@ -91,7 +106,6 @@ class Collector:
             resp = await client.get(self.ARXIV_URL, params=params)
             resp.raise_for_status()
 
-        # Minimal XML parse — replace with feedparser in production
         events = []
         import re
 
@@ -112,7 +126,7 @@ class Collector:
                 )
         return events
 
-    # ── News ─────────────────────────────────────────────────────
+    # ── News ───────────────────────────────────────────────
 
     async def _news_loop(self):
         while self._running:
@@ -121,6 +135,7 @@ class Collector:
                 for event in events:
                     await self.labyrinth.ingest(event)
                 logger.info("News: ingested %d articles", len(events))
+                await self._after_batch()
             except Exception as exc:
                 logger.warning("News fetch failed: %s", exc)
             await asyncio.sleep(self.poll_interval)
