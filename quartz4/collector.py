@@ -52,7 +52,7 @@ class Collector:
         poll_interval: int = 300,
     ):
         self.labyrinth = labyrinth
-        self.sentinel = sentinel          # injected by main.py lifespan
+        self.sentinel = sentinel  # injected by main.py lifespan
         self.poll_interval = poll_interval
         self._tasks: list[asyncio.Task] = []
         self._running = False
