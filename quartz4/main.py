@@ -5,17 +5,17 @@
 FastAPI entrypoint wiring all modules: Collector, Crucible,
 Labyrinth, Sentinel, Oracle, and the cryptographic Memory layer.
 """
-from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 
 from collector import Collector
 from crucible import Crucible
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 from labyrinth import Labyrinth
-from sentinel import Sentinel
-from oracle import Oracle
 from memory import MemoryIntegrity
+from oracle import Oracle
+from sentinel import Sentinel
 
 
 @asynccontextmanager
@@ -56,6 +56,7 @@ app.add_middleware(
 
 # ── REST Endpoints ────────────────────────────────────────────────
 
+
 @app.get("/health")
 async def health():
     return {"status": "alive", "version": "2.0.0", "system": "Quartz 4 Living System"}
@@ -70,7 +71,7 @@ async def list_concepts(limit: int = 50):
 @app.post("/query")
 async def oracle_query(body: dict):
     """Natural language query over entire historical memory.
-    
+
     Example: {"q": "Trace the decline of Proof-of-Work since 2023"}
     """
     question = body.get("q", "")
@@ -108,10 +109,11 @@ async def manual_ingest(body: dict):
 
 # ── WebSocket — Symbiotic Dialogue ───────────────────────────────
 
+
 @app.websocket("/ws/dialogue")
 async def dialogue_socket(websocket: WebSocket):
     """Real-time symbiotic conversation channel.
-    
+
     The Oracle and Sentinel both push to this channel.
     Client sends natural language; receives analysis + hypotheses.
     """

@@ -9,6 +9,7 @@ entire historical memory:
 
 Combines Labyrinth similarity search with Crucible deep analysis.
 """
+
 import logging
 
 logger = logging.getLogger(__name__)
@@ -23,7 +24,7 @@ class Oracle:
 
     async def answer(self, question: str) -> str:
         """Answer a natural language question about the knowledge base.
-        
+
         Flow:
           1. Embed the question via Crucible
           2. Retrieve top-k similar concepts from Labyrinth

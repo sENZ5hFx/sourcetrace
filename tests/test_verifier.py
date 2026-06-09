@@ -1,6 +1,7 @@
 # Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
 # SPDX-License-Identifier: BSL-1.1
 """Tests for core.verifier — chain integrity validation."""
+
 import core.ledger as ledger_module
 from core.certifier import generate_certificate
 from core.verifier import verify_chain

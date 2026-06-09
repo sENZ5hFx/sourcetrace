@@ -10,11 +10,11 @@ Continuously ingests from concurrent API streams:
 Normalises all data into ConceptEvent objects and funnels
 them into the Labyrinth memory layer.
 """
+
 import asyncio
 import logging
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional
 
 import httpx
 
@@ -94,19 +94,22 @@ class Collector:
         # Minimal XML parse — replace with feedparser in production
         events = []
         import re
+
         entries = re.findall(r"<entry>(.*?)</entry>", resp.text, re.DOTALL)
         for i, entry in enumerate(entries):
             title_match = re.search(r"<title>(.*?)</title>", entry, re.DOTALL)
             summary_match = re.search(r"<summary>(.*?)</summary>", entry, re.DOTALL)
             id_match = re.search(r"<id>(.*?)</id>", entry)
             if title_match and summary_match and id_match:
-                events.append(ConceptEvent(
-                    id=f"arxiv-{i}-{hash(id_match.group(1))}",
-                    source="arxiv",
-                    title=title_match.group(1).strip(),
-                    summary=summary_match.group(1).strip()[:500],
-                    url=id_match.group(1).strip(),
-                ))
+                events.append(
+                    ConceptEvent(
+                        id=f"arxiv-{i}-{hash(id_match.group(1))}",
+                        source="arxiv",
+                        title=title_match.group(1).strip(),
+                        summary=summary_match.group(1).strip()[:500],
+                        url=id_match.group(1).strip(),
+                    )
+                )
         return events
 
     # ── News ─────────────────────────────────────────────────────
@@ -128,6 +131,7 @@ class Collector:
         page_size: int = 20,
     ) -> list[ConceptEvent]:
         import os
+
         api_key = os.getenv("NEWS_API_KEY", "")
         if not api_key:
             return []

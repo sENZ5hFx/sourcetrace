@@ -8,10 +8,10 @@ and ML models for:
   - Structural Imperative (graph-based foundational importance)
   - Predictive Forecasting (time-series trajectory analysis)
 """
+
 import hashlib
 import logging
 import os
-from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +21,7 @@ class Crucible:
 
     def __init__(self, labyrinth):
         self.labyrinth = labyrinth
-        self._client: Optional[object] = None
+        self._client: object | None = None
         self._model = os.getenv("OPENAI_MODEL", "gpt-4o")
 
     def _get_client(self):
@@ -29,6 +29,7 @@ class Crucible:
         if self._client is None:
             try:
                 from openai import AsyncOpenAI
+
                 self._client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
             except ImportError:
                 logger.warning("openai not installed — running in stub mode")
@@ -36,7 +37,7 @@ class Crucible:
 
     async def process(self, text: str, source: str = "manual") -> str:
         """Process raw text: embed, analyse gravity, store.
-        
+
         Returns concept_id.
         """
         concept_id = hashlib.sha256(text.encode()).hexdigest()[:16]
@@ -91,7 +92,11 @@ class Crucible:
             return {"concept_id": concept_id, "trajectory": "insufficient_data"}
         # Time-series stub — replace with actual ML model (e.g. Prophet, ARIMA)
         velocities = [h.get("gravity", 0) for h in history]
-        trend = "rising" if len(velocities) > 1 and velocities[-1] > velocities[0] else "stable"
+        trend = (
+            "rising"
+            if len(velocities) > 1 and velocities[-1] > velocities[0]
+            else "stable"
+        )
         return {
             "concept_id": concept_id,
             "trajectory": trend,
@@ -104,9 +109,11 @@ class Crucible:
         client = self._get_client()
         if client is None:
             # Deterministic stub embedding (1536-dim)
-            import hashlib, struct
+            import hashlib
+
             seed = int(hashlib.md5(text.encode()).hexdigest(), 16)
             import random
+
             rng = random.Random(seed)
             return [rng.gauss(0, 1) for _ in range(1536)]
         response = await client.embeddings.create(
@@ -117,10 +124,11 @@ class Crucible:
 
     def _conceptual_gravity(self, embedding: list[float]) -> float:
         """Compute conceptual gravity score from embedding magnitude.
-        
+
         Full implementation: vector proximity to existing concepts
         + network centrality in the graph DB. Stub: L2 norm proxy.
         """
         import math
-        magnitude = math.sqrt(sum(x ** 2 for x in embedding[:128]))
+
+        magnitude = math.sqrt(sum(x**2 for x in embedding[:128]))
         return round(magnitude / 10.0, 4)

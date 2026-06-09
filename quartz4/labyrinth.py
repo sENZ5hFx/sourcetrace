@@ -10,12 +10,12 @@ Dual-database architecture:
 
 Memory Integrity: cryptographic hashing of snapshots.
 """
+
 import hashlib
 import json
 import logging
 import os
 from datetime import datetime
-from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -49,6 +49,7 @@ class Labyrinth:
             return
         try:
             from pinecone import Pinecone
+
             pc = Pinecone(api_key=api_key)
             self._pinecone = pc.Index(self._index_name)
             logger.info("Pinecone: connected to index '%s'", self._index_name)
@@ -62,9 +63,13 @@ class Labyrinth:
             return
         try:
             from neo4j import AsyncGraphDatabase
+
             self._neo4j = AsyncGraphDatabase.driver(
                 uri,
-                auth=(os.getenv("NEO4J_USER", "neo4j"), os.getenv("NEO4J_PASSWORD", "")),
+                auth=(
+                    os.getenv("NEO4J_USER", "neo4j"),
+                    os.getenv("NEO4J_PASSWORD", ""),
+                ),
             )
             logger.info("Neo4j: connected at %s", uri)
         except Exception as exc:
@@ -105,7 +110,15 @@ class Labyrinth:
 
         if self._pinecone:
             try:
-                self._pinecone.upsert(vectors=[{"id": concept_id, "values": embedding, "metadata": {"source": source}}])
+                self._pinecone.upsert(
+                    vectors=[
+                        {
+                            "id": concept_id,
+                            "values": embedding,
+                            "metadata": {"source": source},
+                        }
+                    ]
+                )
             except Exception as exc:
                 logger.warning("Pinecone upsert failed: %s", exc)
 
@@ -114,21 +127,27 @@ class Labyrinth:
                 async with self._neo4j.session() as session:
                     await session.run(
                         "MERGE (c:Concept {id: $id}) SET c.gravity = $gravity, c.source = $source",
-                        id=concept_id, gravity=gravity, source=source,
+                        id=concept_id,
+                        gravity=gravity,
+                        source=source,
                     )
             except Exception as exc:
                 logger.warning("Neo4j write failed: %s", exc)
 
     async def top_concepts(self, limit: int = 50) -> list[dict]:
         """Return top concepts by gravity score."""
-        concepts = sorted(self._memory.values(), key=lambda c: c.get("gravity", 0), reverse=True)
+        concepts = sorted(
+            self._memory.values(), key=lambda c: c.get("gravity", 0), reverse=True
+        )
         return concepts[:limit]
 
     async def search(self, query_embedding: list[float], top_k: int = 10) -> list[dict]:
         """Similarity search over stored concepts."""
         if self._pinecone:
             try:
-                result = self._pinecone.query(vector=query_embedding, top_k=top_k, include_metadata=True)
+                result = self._pinecone.query(
+                    vector=query_embedding, top_k=top_k, include_metadata=True
+                )
                 ids = [m["id"] for m in result.get("matches", [])]
                 return [self._memory[i] for i in ids if i in self._memory]
             except Exception as exc:

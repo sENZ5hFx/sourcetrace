@@ -7,11 +7,10 @@ conversational hypotheses:
   'Hypothesis: A breakthrough in [domain] is imminent based on
    converging patent and pre-print data. Authorize deep analysis?'
 """
-import asyncio
+
 import logging
 import uuid
 from datetime import datetime
-from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +23,7 @@ class Alert:
         self.confidence = confidence
         self.created_at = datetime.utcnow().isoformat()
         self.authorized = False
-        self.result: Optional[dict] = None
+        self.result: dict | None = None
 
 
 class Sentinel:
@@ -39,10 +38,7 @@ class Sentinel:
     async def scan(self, concepts: list[dict]) -> list[Alert]:
         """Scan concept list for emerging high-gravity signals."""
         new_alerts = []
-        rising = [
-            c for c in concepts
-            if c.get("gravity", 0) >= self.GRAVITY_THRESHOLD
-        ]
+        rising = [c for c in concepts if c.get("gravity", 0) >= self.GRAVITY_THRESHOLD]
         if rising:
             top = rising[0]
             hypothesis = (
@@ -83,7 +79,9 @@ class Sentinel:
         # Trigger deep analysis via Crucible
         result = await self.crucible.analyse(
             question=alert.hypothesis,
-            context=[{"source": cid, "title": cid, "summary": ""} for cid in alert.concepts],
+            context=[
+                {"source": cid, "title": cid, "summary": ""} for cid in alert.concepts
+            ],
         )
         alert.result = {"analysis": result}
         return alert.result

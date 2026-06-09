@@ -7,8 +7,7 @@ Applies the Memory Integrity protocol from Quartz 4 spec:
   - Tamper-evident audit trail
   - Verifiable memory provenance
 """
-import hashlib
-import json
+
 import logging
 from datetime import datetime
 
@@ -34,7 +33,9 @@ class MemoryIntegrity:
             "prev_hash": self._history[-1]["hash"] if self._history else None,
         }
         self._history.append(entry)
-        logger.info("Memory snapshot: %s (%d concepts)", current_hash[:12], concept_count)
+        logger.info(
+            "Memory snapshot: %s (%d concepts)", current_hash[:12], concept_count
+        )
         return entry
 
     def verify(self, claimed_hash: str) -> bool:

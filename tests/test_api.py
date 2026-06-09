@@ -1,6 +1,7 @@
 # Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
 # SPDX-License-Identifier: BSL-1.1
 """Integration tests for sourcetrace FastAPI endpoints."""
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -8,10 +9,9 @@ from fastapi.testclient import TestClient
 @pytest.fixture
 def client(isolated_db):
     """TestClient created AFTER isolated_db has swapped DB_PATH."""
-    from main import app  # noqa: PLC0415
-
     # Ensure the lifespan-initialised ledger uses the test DB path.
     import core.ledger as ledger_module
+    from main import app  # noqa: PLC0415
 
     ledger_module.init_ledger(isolated_db)
 
