@@ -7,16 +7,22 @@ Continuously ingests from concurrent API streams:
   - Alpha Vantage (finance)
   - NewsAPI (global events)
 
-Normalises all data into ConceptEvent objects and funnels
-them into the Labyrinth memory layer.
+Normalises all data into ConceptEvent objects, funnels them into
+the Labyrinth memory layer, then triggers a Sentinel scan so that
+proactive alerts fire automatically after each ingestion cycle.
 """
 
 import asyncio
 import logging
 from dataclasses import dataclass, field
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 import httpx
+
+if TYPE_CHECKING:
+    from labyrinth import Labyrinth
+    from sentinel import Sentinel
 
 logger = logging.getLogger(__name__)
 
@@ -33,14 +39,20 @@ class ConceptEvent:
 
 
 class Collector:
-    """Multi-source async data collector."""
+    """Multi-source async data collector with integrated Sentinel scanning."""
 
     ARXIV_URL = "https://export.arxiv.org/api/query"
     NEWS_URL = "https://newsapi.org/v2/top-headlines"
     ALPHA_VANTAGE_URL = "https://www.alphavantage.co/query"
 
-    def __init__(self, labyrinth, poll_interval: int = 300):
+    def __init__(
+        self,
+        labyrinth: "Labyrinth",
+        sentinel: "Sentinel | None" = None,
+        poll_interval: int = 300,
+    ):
         self.labyrinth = labyrinth
+        self.sentinel = sentinel          # injected by main.py lifespan
         self.poll_interval = poll_interval
         self._tasks: list[asyncio.Task] = []
         self._running = False
@@ -62,7 +74,24 @@ class Collector:
         await asyncio.gather(*self._tasks, return_exceptions=True)
         logger.info("Collector stopped")
 
-    # ── arXiv ────────────────────────────────────────────────────
+    # ── Post-ingestion Sentinel scan ────────────────────────────────────────────
+
+    async def _run_sentinel_scan(self) -> None:
+        """After each ingestion cycle, pull top concepts and scan for alerts."""
+        if self.sentinel is None:
+            return
+        try:
+            concepts = await self.labyrinth.top_concepts(limit=25)
+            alerts = await self.sentinel.scan(concepts)
+            if alerts:
+                logger.info(
+                    "Sentinel: %d new alert(s) generated after ingestion cycle",
+                    len(alerts),
+                )
+        except Exception as exc:
+            logger.warning("Sentinel scan failed: %s", exc)
+
+    # ── arXiv ─────────────────────────────────────────────────────────────
 
     async def _arxiv_loop(self):
         while self._running:
@@ -71,6 +100,7 @@ class Collector:
                 for event in events:
                     await self.labyrinth.ingest(event)
                 logger.info("arXiv: ingested %d concepts", len(events))
+                await self._run_sentinel_scan()
             except Exception as exc:
                 logger.warning("arXiv fetch failed: %s", exc)
             await asyncio.sleep(self.poll_interval)
@@ -91,7 +121,6 @@ class Collector:
             resp = await client.get(self.ARXIV_URL, params=params)
             resp.raise_for_status()
 
-        # Minimal XML parse — replace with feedparser in production
         events = []
         import re
 
@@ -112,7 +141,7 @@ class Collector:
                 )
         return events
 
-    # ── News ─────────────────────────────────────────────────────
+    # ── News ──────────────────────────────────────────────────────────────
 
     async def _news_loop(self):
         while self._running:
@@ -121,6 +150,7 @@ class Collector:
                 for event in events:
                     await self.labyrinth.ingest(event)
                 logger.info("News: ingested %d articles", len(events))
+                await self._run_sentinel_scan()
             except Exception as exc:
                 logger.warning("News fetch failed: %s", exc)
             await asyncio.sleep(self.poll_interval)
