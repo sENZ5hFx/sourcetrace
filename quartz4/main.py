@@ -4,6 +4,9 @@
 
 FastAPI entrypoint wiring all modules: Collector, Crucible,
 Labyrinth, Sentinel, Oracle, and the cryptographic Memory layer.
+
+Sentinel is injected into Collector so that proactive alerts are
+automatically generated after every ingestion cycle.
 """
 
 from contextlib import asynccontextmanager
@@ -20,13 +23,28 @@ from sentinel import Sentinel
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Startup: initialise all modules. Shutdown: flush and close."""
+    """Startup: initialise all modules. Shutdown: flush and close.
+
+    Initialisation order matters:
+      1. Labyrinth (DB connections) must come first.
+      2. Crucible depends on Labyrinth.
+      3. Sentinel depends on Crucible.
+      4. Collector depends on Labyrinth AND Sentinel (for post-ingest scans).
+      5. Oracle depends on Labyrinth and Crucible.
+      6. MemoryIntegrity depends on Labyrinth.
+    """
     app.state.labyrinth = Labyrinth()
     await app.state.labyrinth.connect()
 
-    app.state.collector = Collector(labyrinth=app.state.labyrinth)
     app.state.crucible = Crucible(labyrinth=app.state.labyrinth)
     app.state.sentinel = Sentinel(crucible=app.state.crucible)
+
+    # Collector receives sentinel so alerts fire after every ingestion cycle
+    app.state.collector = Collector(
+        labyrinth=app.state.labyrinth,
+        sentinel=app.state.sentinel,
+    )
+
     app.state.oracle = Oracle(
         labyrinth=app.state.labyrinth,
         crucible=app.state.crucible,
@@ -54,7 +72,7 @@ app.add_middleware(
 )
 
 
-# ── REST Endpoints ────────────────────────────────────────────────
+# ── REST Endpoints ─────────────────────────────────────────────────────────────
 
 
 @app.get("/health")
@@ -98,16 +116,38 @@ async def memory_snapshot():
     return await app.state.memory.snapshot()
 
 
+@app.get("/memory/audit")
+async def memory_audit():
+    """Return the full tamper-evident memory audit trail."""
+    return app.state.memory.audit_trail()
+
+
+@app.get("/memory/verify/{claimed_hash}")
+async def memory_verify(claimed_hash: str):
+    """Verify a claimed memory hash against the audit trail."""
+    valid = app.state.memory.verify(claimed_hash)
+    return {"claimed_hash": claimed_hash, "valid": valid}
+
+
 @app.post("/ingest")
 async def manual_ingest(body: dict):
     """Manually push a concept or document into the Labyrinth."""
     concept = body.get("concept", "")
     source = body.get("source", "manual")
     result = await app.state.crucible.process(concept, source=source)
+    # Trigger Sentinel scan after manual ingest too
+    concepts = await app.state.labyrinth.top_concepts(limit=25)
+    await app.state.sentinel.scan(concepts)
     return {"status": "ingested", "concept_id": result}
 
 
-# ── WebSocket — Symbiotic Dialogue ───────────────────────────────
+@app.get("/forecast/{concept_id}")
+async def forecast_concept(concept_id: str):
+    """Return predictive trajectory for a stored concept."""
+    return await app.state.crucible.forecast(concept_id)
+
+
+# ── WebSocket — Symbiotic Dialogue ───────────────────────────────────────────
 
 
 @app.websocket("/ws/dialogue")
@@ -116,6 +156,11 @@ async def dialogue_socket(websocket: WebSocket):
 
     The Oracle and Sentinel both push to this channel.
     Client sends natural language; receives analysis + hypotheses.
+
+    Message types (client → server):
+      {"type": "query", "q": "<question>"}  → Oracle answer
+      {"type": "ping"}                      → Sentinel alerts snapshot
+      {"type": "ingest", "concept": "..."}  → Manual ingest + scan
     """
     await websocket.accept()
     try:
@@ -129,7 +174,24 @@ async def dialogue_socket(websocket: WebSocket):
 
             elif msg_type == "ping":
                 alerts = await app.state.sentinel.pending_alerts()
-                await websocket.send_json({"type": "alerts", "payload": alerts})
+                snapshot = await app.state.memory.snapshot()
+                await websocket.send_json(
+                    {"type": "state", "alerts": alerts, "memory": snapshot}
+                )
+
+            elif msg_type == "ingest":
+                concept = data.get("concept", "")
+                if concept:
+                    cid = await app.state.crucible.process(concept, source="ws")
+                    concepts = await app.state.labyrinth.top_concepts(limit=25)
+                    new_alerts = await app.state.sentinel.scan(concepts)
+                    await websocket.send_json(
+                        {
+                            "type": "ingested",
+                            "concept_id": cid,
+                            "new_alerts": len(new_alerts),
+                        }
+                    )
 
     except WebSocketDisconnect:
         pass
