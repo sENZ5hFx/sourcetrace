@@ -5,7 +5,7 @@
 # Inventor: Haley Ann Bird | First committed: 2024 | Priority date: 2024-01-01
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 
 def hash_content(content: str) -> str:
@@ -19,7 +19,7 @@ def generate_certificate(
     prev_hash: str | None = None,
     metadata: dict | None = None,
 ) -> dict:
-    timestamp = datetime.now(timezone.utc).isoformat()
+    timestamp = datetime.now(UTC).isoformat()
     content_hash = hash_content(content)
     cert_body = {
         "author": author,

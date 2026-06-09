@@ -1,6 +1,7 @@
 # Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
 # SPDX-License-Identifier: BSL-1.1
 """Integration tests for sourcetrace FastAPI endpoints."""
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -19,6 +20,7 @@ def isolated_db(tmp_path):
 @pytest.fixture
 def client():
     from main import app
+
     with TestClient(app) as c:
         yield c
 
@@ -68,7 +70,9 @@ def test_ledger_endpoint(client):
 
 
 def test_bundle_export(client):
-    client.post("/certify", json={"content": "bundle test", "author": "h", "model": "m"})
+    client.post(
+        "/certify", json={"content": "bundle test", "author": "h", "model": "m"}
+    )
     r = client.get("/bundle/export")
     assert r.status_code == 200
     data = r.json()

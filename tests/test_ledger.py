@@ -1,10 +1,8 @@
 # Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
 # SPDX-License-Identifier: BSL-1.1
 """Tests for core.ledger — append-only SQLite ledger."""
+
 import pytest
-from pathlib import Path
-import tempfile
-import os
 
 import core.ledger as ledger_module
 from core.certifier import generate_certificate

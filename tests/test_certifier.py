@@ -1,9 +1,6 @@
 # Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
 # SPDX-License-Identifier: BSL-1.1
 """Tests for core.certifier — CLP certificate generation."""
-import json
-
-import pytest
 
 from core.certifier import generate_certificate, hash_content
 

@@ -58,9 +58,7 @@ def append_certificate(cert: dict) -> bool:
 
 def get_certificate(cert_id: str) -> dict | None:
     conn = sqlite3.connect(DB_PATH)
-    row = conn.execute(
-        "SELECT * FROM certificates WHERE id = ?", (cert_id,)
-    ).fetchone()
+    row = conn.execute("SELECT * FROM certificates WHERE id = ?", (cert_id,)).fetchone()
     conn.close()
     if not row:
         return None
@@ -88,9 +86,7 @@ def get_latest_hash() -> str:
 
 def get_full_ledger() -> list:
     conn = sqlite3.connect(DB_PATH)
-    rows = conn.execute(
-        "SELECT * FROM certificates ORDER BY timestamp ASC"
-    ).fetchall()
+    rows = conn.execute("SELECT * FROM certificates ORDER BY timestamp ASC").fetchall()
     conn.close()
     keys = [
         "id",
