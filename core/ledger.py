@@ -1,12 +1,16 @@
-import sqlite3
+# Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
+# SPDX-License-Identifier: BSL-1.1
+# sourcetrace — Certified Ledger Protocol (CLP) Append-Only SQLite Ledger
+# Invention: Tamper-evident hash-chained ledger for AI content provenance
+# Inventor: Haley Ann Bird | Priority date: 2024-01-01
 import json
+import sqlite3
 from pathlib import Path
-from typing import Optional
 
 DB_PATH = Path("storage/ledger.db")
 
 
-def init_ledger():
+def init_ledger() -> None:
     DB_PATH.parent.mkdir(exist_ok=True)
     conn = sqlite3.connect(DB_PATH)
     conn.execute("""
@@ -52,9 +56,11 @@ def append_certificate(cert: dict) -> bool:
         conn.close()
 
 
-def get_certificate(cert_id: str) -> Optional[dict]:
+def get_certificate(cert_id: str) -> dict | None:
     conn = sqlite3.connect(DB_PATH)
-    row = conn.execute("SELECT * FROM certificates WHERE id = ?", (cert_id,)).fetchone()
+    row = conn.execute(
+        "SELECT * FROM certificates WHERE id = ?", (cert_id,)
+    ).fetchone()
     conn.close()
     if not row:
         return None
@@ -82,7 +88,9 @@ def get_latest_hash() -> str:
 
 def get_full_ledger() -> list:
     conn = sqlite3.connect(DB_PATH)
-    rows = conn.execute("SELECT * FROM certificates ORDER BY timestamp ASC").fetchall()
+    rows = conn.execute(
+        "SELECT * FROM certificates ORDER BY timestamp ASC"
+    ).fetchall()
     conn.close()
     keys = [
         "id",

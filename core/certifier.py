@@ -1,7 +1,11 @@
+# Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
+# SPDX-License-Identifier: BSL-1.1
+# sourcetrace — Certified Ledger Protocol (CLP) Core Engine
+# Invention: Hash-chained AI content provenance certificate generation
+# Inventor: Haley Ann Bird | First committed: 2024 | Priority date: 2024-01-01
 import hashlib
 import json
 from datetime import datetime, timezone
-from typing import Optional
 
 
 def hash_content(content: str) -> str:
@@ -12,8 +16,8 @@ def generate_certificate(
     content: str,
     author: str,
     model: str,
-    prev_hash: Optional[str] = None,
-    metadata: Optional[dict] = None,
+    prev_hash: str | None = None,
+    metadata: dict | None = None,
 ) -> dict:
     timestamp = datetime.now(timezone.utc).isoformat()
     content_hash = hash_content(content)

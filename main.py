@@ -1,15 +1,22 @@
-from fastapi import FastAPI, HTTPException
+# Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
+# SPDX-License-Identifier: BSL-1.1
+# sourcetrace — Certified Ledger Protocol (CLP) API entrypoint
+# Invention: AI content provenance engine with hash-chained ledger
+# Inventor: Haley Ann Bird | heyhaleybird@gmail.com | Fishers, IN, USA
 from contextlib import asynccontextmanager
+
+from fastapi import FastAPI, HTTPException
+
+from api.models import CertifyRequest
 from core.certifier import generate_certificate
 from core.ledger import (
-    init_ledger,
     append_certificate,
     get_certificate,
-    get_latest_hash,
     get_full_ledger,
+    get_latest_hash,
+    init_ledger,
 )
 from core.verifier import verify_chain
-from api.models import CertifyRequest
 
 
 @asynccontextmanager

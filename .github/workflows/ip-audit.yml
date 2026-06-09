@@ -1,0 +1,46 @@
+# Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
+name: IP Audit & Timestamp
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.py'
+      - 'IP_DISCLOSURE.md'
+      - 'PATENT.md'
+      - 'LDIR_CLAIMS.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ip-timestamp:
+    name: Record IP Audit Timestamp
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Write timestamped audit entry
+        run: |
+          TS=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+          SHA=${{ github.sha }}
+          BRANCH=${{ github.ref_name }}
+          ACTOR=${{ github.actor }}
+          echo "\n## Audit Entry: $TS" >> .ip-timestamp
+          echo "- Commit: $SHA" >> .ip-timestamp
+          echo "- Branch: $BRANCH" >> .ip-timestamp
+          echo "- Actor: $ACTOR" >> .ip-timestamp
+          echo "- Repository: ${{ github.repository }}" >> .ip-timestamp
+          echo "- Timestamp (UTC): $TS" >> .ip-timestamp
+
+      - name: Commit audit entry
+        run: |
+          git config user.name "sourcetrace-ip-bot"
+          git config user.email "heyhaleybird@gmail.com"
+          git add .ip-timestamp
+          git diff --staged --quiet || git commit -m "chore(ip): automated audit timestamp [${{ github.sha }}]"
+          git push

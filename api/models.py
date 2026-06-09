@@ -1,12 +1,14 @@
+# Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
+# SPDX-License-Identifier: BSL-1.1
+# sourcetrace — API request/response models
 from pydantic import BaseModel
-from typing import Optional
 
 
 class CertifyRequest(BaseModel):
     content: str
     author: str
     model: str
-    metadata: Optional[dict] = {}
+    metadata: dict | None = None
 
 
 class CertificateResponse(BaseModel):

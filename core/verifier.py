@@ -1,3 +1,8 @@
+# Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
+# SPDX-License-Identifier: BSL-1.1
+# sourcetrace — Certified Ledger Protocol (CLP) Chain Verifier
+# Invention: Structural integrity verification of hash-chained provenance ledger
+# Inventor: Haley Ann Bird | Priority date: 2024-01-01
 from core.ledger import get_full_ledger
 
 
