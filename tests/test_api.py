@@ -1,27 +1,21 @@
 # Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
 # SPDX-License-Identifier: BSL-1.1
 """Integration tests for sourcetrace FastAPI endpoints."""
-
 import pytest
 from fastapi.testclient import TestClient
 
-import core.ledger as ledger_module
-
-
-@pytest.fixture(autouse=True)
-def isolated_db(tmp_path):
-    original = ledger_module.DB_PATH
-    ledger_module.DB_PATH = tmp_path / "test_api.db"
-    ledger_module.init_ledger()
-    yield
-    ledger_module.DB_PATH = original
-
 
 @pytest.fixture
-def client():
-    from main import app
+def client(isolated_db):
+    """TestClient created AFTER isolated_db has swapped DB_PATH."""
+    from main import app  # noqa: PLC0415
 
-    with TestClient(app) as c:
+    # Ensure the lifespan-initialised ledger uses the test DB path.
+    import core.ledger as ledger_module
+
+    ledger_module.init_ledger(isolated_db)
+
+    with TestClient(app, raise_server_exceptions=True) as c:
         yield c
 
 

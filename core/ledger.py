@@ -10,9 +10,16 @@ from pathlib import Path
 DB_PATH = Path("storage/ledger.db")
 
 
-def init_ledger() -> None:
-    DB_PATH.parent.mkdir(exist_ok=True)
-    conn = sqlite3.connect(DB_PATH)
+def _db() -> Path:
+    """Return current DB_PATH at call-time so test fixtures can swap it."""
+    return DB_PATH
+
+
+def init_ledger(path: Path | None = None) -> None:
+    """Initialise the ledger DB. Pass *path* to override DB_PATH (tests only)."""
+    target = path or _db()
+    target.parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(target)
     conn.execute("""
         CREATE TABLE IF NOT EXISTS certificates (
             id TEXT PRIMARY KEY,
@@ -30,7 +37,7 @@ def init_ledger() -> None:
 
 
 def append_certificate(cert: dict) -> bool:
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(_db())
     try:
         conn.execute(
             """
@@ -57,7 +64,7 @@ def append_certificate(cert: dict) -> bool:
 
 
 def get_certificate(cert_id: str) -> dict | None:
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(_db())
     row = conn.execute("SELECT * FROM certificates WHERE id = ?", (cert_id,)).fetchone()
     conn.close()
     if not row:
@@ -76,7 +83,7 @@ def get_certificate(cert_id: str) -> dict | None:
 
 
 def get_latest_hash() -> str:
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(_db())
     row = conn.execute(
         "SELECT content_hash FROM certificates ORDER BY timestamp DESC LIMIT 1"
     ).fetchone()
@@ -85,7 +92,7 @@ def get_latest_hash() -> str:
 
 
 def get_full_ledger() -> list:
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(_db())
     rows = conn.execute("SELECT * FROM certificates ORDER BY timestamp ASC").fetchall()
     conn.close()
     keys = [

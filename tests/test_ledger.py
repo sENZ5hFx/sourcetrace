@@ -1,25 +1,12 @@
 # Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
 # SPDX-License-Identifier: BSL-1.1
 """Tests for core.ledger — append-only SQLite ledger."""
-
-import pytest
-
 import core.ledger as ledger_module
 from core.certifier import generate_certificate
 
 
-@pytest.fixture(autouse=True)
-def isolated_db(tmp_path):
-    """Redirect DB_PATH to a temp file for each test."""
-    original = ledger_module.DB_PATH
-    ledger_module.DB_PATH = tmp_path / "test_ledger.db"
-    ledger_module.init_ledger()
-    yield
-    ledger_module.DB_PATH = original
-
-
-def test_init_creates_db(tmp_path):
-    assert ledger_module.DB_PATH.exists()
+def test_init_creates_db(isolated_db):
+    assert isolated_db.exists()
 
 
 def test_append_and_retrieve():
@@ -55,7 +42,6 @@ def test_get_full_ledger_ordered():
         ledger_module.append_certificate(c)
     records = ledger_module.get_full_ledger()
     assert len(records) == 3
-    # Timestamps should be ascending
     timestamps = [r["timestamp"] for r in records]
     assert timestamps == sorted(timestamps)
 
@@ -63,6 +49,6 @@ def test_get_full_ledger_ordered():
 def test_duplicate_id_fails_gracefully():
     cert = generate_certificate(content="dup", author="h", model="m")
     r1 = ledger_module.append_certificate(cert)
-    r2 = ledger_module.append_certificate(cert)  # same id — PRIMARY KEY conflict
+    r2 = ledger_module.append_certificate(cert)
     assert r1 is True
     assert r2 is False

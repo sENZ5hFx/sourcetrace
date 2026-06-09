@@ -1,21 +1,9 @@
 # Copyright (c) 2024–2026 Haley Ann Bird. All Rights Reserved.
 # SPDX-License-Identifier: BSL-1.1
 """Tests for core.verifier — chain integrity validation."""
-
-import pytest
-
 import core.ledger as ledger_module
 from core.certifier import generate_certificate
 from core.verifier import verify_chain
-
-
-@pytest.fixture(autouse=True)
-def isolated_db(tmp_path):
-    original = ledger_module.DB_PATH
-    ledger_module.DB_PATH = tmp_path / "test_verifier.db"
-    ledger_module.init_ledger()
-    yield
-    ledger_module.DB_PATH = original
 
 
 def test_empty_ledger_is_valid():
@@ -47,7 +35,6 @@ def test_chained_certs_are_valid():
 def test_broken_chain_detected():
     c1 = generate_certificate(content="a", author="h", model="m")
     ledger_module.append_certificate(c1)
-    # Deliberately wrong prev_hash to break chain
     c2 = generate_certificate(
         content="b", author="h", model="m", prev_hash="sha256:WRONG"
     )
